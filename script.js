@@ -1,14 +1,42 @@
 'use strict';
 
-/*
-console.log(document.querySelector('.message').textContent);
-document.querySelector('.message').textContent = `🎉 Correct Number!`
+//#Choosing game mode
+function hideModes() {
+    document.querySelector('.modes').classList.add('hidden');
+    document.querySelector('.left').classList.remove('hidden');
+    document.querySelector('.right').classList.remove('hidden');
+    document.querySelector('.again').classList.remove('hidden');
+}
+let highestVal = 0;
+const betweenMessage = document.getElementById('bw');
 
-document.querySelector('.number').textContent = 14;
-document.querySelector('.score').textContent = 10;*/
 
-// document.querySelector('.guess').value = 23;
-let secretNumber = Math.trunc(Math.random() * 20) + 1;
+//Confiuring noob, pro and god buttons
+document.querySelector('.noob').addEventListener('click', function () {
+    hideModes();
+    highestVal = 20;
+    betweenMessage.classList.remove('hidden');
+});
+
+document.querySelector('.pro').addEventListener('click', function () {
+    hideModes();
+    highestVal = 50;
+    betweenMessage.classList.remove('hidden');
+    betweenMessage.textContent = `(Between 1 and 50)`;
+    betweenMessage.style.color = 'yellow';
+});
+document.querySelector('.god').addEventListener('click', function () {
+    hideModes();
+    highestVal = 100;
+    betweenMessage.classList.remove('hidden');
+    betweenMessage.textContent = `(Between 1 and 100)`;
+    betweenMessage.style.color = 'red';
+});
+
+
+
+
+let secretNumber = Math.trunc(Math.random() * highestVal) + 1;
 let score = 20;
 let highscore = 0;
 function displayMessage(str) {
@@ -78,9 +106,18 @@ GOOD LUCK �
 */
 
 document.querySelector('.again').addEventListener('click', function () {
+    document.querySelector('.modes').classList.toggle('hidden');
+    document.querySelector('.left').classList.toggle('hidden');
+    document.querySelector('.right').classList.toggle('hidden');
+    document.querySelector('.again').classList.toggle('hidden');
+
+    betweenMessage.classList.toggle('hidden');
+
+
+    //
     score = 20;
     document.querySelector('.score').textContent = score;
-    secretNumber = Math.trunc(Math.random() * 20) + 1;
+    secretNumber = Math.trunc(Math.random() * highestVal) + 1;
 
     displayMessage(`Start guessing...`);
     document.querySelector('.number').textContent = '?';
